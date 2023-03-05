@@ -146,7 +146,7 @@ module.exports.getSomeProduct =  async (req, res) => {
 	res.send({ page: page, limit: limit, Products: Products });
   };
 
-module.exports.numOfPages = async(req,res) =>{
+module.exports.numOfPages = async(req,res,next) =>{
 	let number = 0 ;
 	try {
 		const productList = await Product.find();
@@ -155,10 +155,11 @@ module.exports.numOfPages = async(req,res) =>{
 		}
 		else 
 		{
-			while(productList.length >=10 || productList.length > 0)
+			let len = productList.length;
+			while(len>=10 || len > 0)
 			{
 				number +=1;
-				productList.length -=10;
+				len = len - 10;
 			}
 			res.status(200).json({ success: true, pages: number });
 			console.log(number);
