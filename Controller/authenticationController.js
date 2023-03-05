@@ -146,7 +146,27 @@ module.exports.getSomeProduct =  async (req, res) => {
 	res.send({ page: page, limit: limit, Products: Products });
   };
 
-
+module.exports.numOfPages = async(req,res) =>{
+	let number = 0 ;
+	try {
+		const productList = await Product.find();
+		if (!productList) {
+			throw new Error("items not exist");
+		}
+		else 
+		{
+			while(productList.length >=10 || productList.length > 0)
+			{
+				number +=1;
+				productList.length -=10;
+			}
+			res.status(200).json({ success: true, pages: number });
+			console.log(number);
+		}
+	} catch (error) {
+		next(error);
+	}
+};
 
 module.exports.getProductById = async (req, res, next) => {
 	try {

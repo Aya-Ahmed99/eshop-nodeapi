@@ -27,6 +27,7 @@ authenticationRoute.get("/logout", controller.logout);
 
 authenticationRoute.get("/products", controller.getAllProducts);
 authenticationRoute.get("/someProducts", controller.getSomeProduct);
+authenticationRoute.get("/pages", controller.numOfPages);
 authenticationRoute.get(
 	"/products/:id",
 	productValidation,
